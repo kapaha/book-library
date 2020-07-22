@@ -54,5 +54,6 @@ function render() {
 // manually added books to myLibary for testing
 const book1 = new Book('Harry Potter and the Sorcerer\'s Stone', 'J.K. Rowling', '800', 'Yes');
 const book2 = new Book('The Lord of the Rings', 'J.R.R. Tolkein', '1000', 'No');
-myLibary.push(book1, book2);
+const book3 = new Book('City of Bones', 'Cassandra Clare', '600', 'Yes');
+myLibary.push(book1, book2, book3);
 render();
