@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
 
+:root {
+    --primary-color: #34495e;
+    --secondary-color: #9555AF;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -11,12 +16,50 @@ body {
     background-color: lightblue;
 }
 
+/* button resets */
+button {
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.btn {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    margin: 2px 0;
+    border: solid 1px transparent;
+    border-radius: 4px;
+    padding: 0.5em 1em;
+    color: white;
+    background-color: var(--secondary-color);
+    outline: none;
+}
+
+.btn::-moz-focus-inner {
+    border: none;
+}
+
+.btn:active {
+    transform: translateY(1px);
+    filter: saturate(150%);
+}
+
+.btn:hover {
+    color: var(--secondary-color);
+    border-color: currentColor;
+    background-color: white;
+}
+
 .container {
     margin: auto;
     width: 50%;
     min-width: fit-content;
     border: 3px solid black;
-    padding: 10px;
+    padding: 20px 10px;
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -25,14 +68,14 @@ body {
 
 .container > header {
     width: 100%;
-    margin-bottom: 10px;
-    padding: 10px;
+    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .title {
+    font-size: 2.2rem;
     margin-bottom: 20px;
 }
 
@@ -59,7 +102,7 @@ body {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #4CAF50;
+    background-color: var(--primary-color);
     color: white;
     font-weight: 500;
 }
