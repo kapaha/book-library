@@ -1,11 +1,27 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap');
 
 :root {
-    --primary-color: #34495e;
-    --secondary-color: #9555AF;
+    --primary-color: #4592B0;
+
+    --background-color: #E9EFF3;
+    --border-color: #C3C4C7;
+
+    --focus-border-color: #2271B1;
+    --focus-shadow-color: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+
+    --input-border-hover-color: #A7AAAD;
+
+    --checkbox-hover-color: #35E07D;
+    --checkbox-checked-color: #27AE60;
+    --checkbox-mark-color: #fff;
+    --checkbox-disabled-color: #aaa;
+    --checkbox-disabled-background-color: #ccc;
+    --checkbox-disabled-border-color: #999;
 }
 
-* {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -13,9 +29,10 @@
 }
 
 body {
-    background-color: lightblue;
+    background-color: var(--background-color);
 }
 
+/* BUTTON STYLES */
 /* button resets */
 button {
     padding: 0;
@@ -28,39 +45,168 @@ button {
 
 .btn {
     display: inline-block;
-    text-align: center;
-    text-decoration: none;
     margin: 2px 0;
     border: solid 1px transparent;
     border-radius: 4px;
     padding: 0.5em 1em;
-    color: white;
-    background-color: var(--secondary-color);
+    color: #fff;
+    background-color: var(--primary-color);
+    cursor: pointer;
+    transition: color 0.3s ease-in-out,
+                border-color 0.3s ease-in-out,
+                background-color 0.3s ease-in-out;
+}
+
+.btn:active {
+    transform: translateY(1px);
+    filter: saturate(400%);
+}
+
+.btn:focus {
+    border-color: var(--focus-border-color);
     outline: none;
+    box-shadow: var(--focus-shadow-color);
 }
 
 .btn::-moz-focus-inner {
     border: none;
 }
 
-.btn:active {
-    transform: translateY(1px);
-    filter: saturate(150%);
+.btn:hover {
+    color: var(--primary-color);
+    border-color: currentColor;
+    background-color: #fff;
+}
+/* END BUTTON STYLES */ 
+
+
+/* FORM STYLES */
+label:not(.checkbox-label) {
+    display: block;
+    padding: 1rem 0 0.25rem;
+    font-weight: 300;
+    cursor: pointer;
 }
 
-.btn:hover {
-    color: var(--secondary-color);
-    border-color: currentColor;
-    background-color: white;
+input:not([type="checkbox"]) {
+    width: 100%;
+    border: 1px solid var(--border-color);
+    padding: 0.5rem;
+    font-size: 18px;
+    border-radius: 5px;
+    transition: border-color 0.15s ease-in-out,
+                box-shadow 0.15s ease-in-out;
 }
+
+input:not([type="checkbox"]):hover {
+    border-color: var(--input-border-hover-color);
+}
+
+input:not([type="checkbox"]):focus {
+    border-color: var(--focus-border-color);
+    box-shadow: var(--focus-shadow-color);
+    outline: none;
+}
+
+/* checkbox styles */
+.checkbox-container {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkbox-container label {
+    line-height: 100%;
+    cursor: pointer;
+    display: flex;
+}
+
+.checkbox-container input[type="checkbox"] {
+    cursor: pointer;
+    /* supports screen readers */
+    opacity: 0;
+    position: absolute;
+}
+
+.checkbox-container label::before {
+    content: "";
+    width: 1em;
+    height: 1em;
+    border-radius: 0.15em;
+    margin-right: 0.5em;
+    border: 0.05em solid black;
+}
+
+.checkbox-container label:hover::before,
+.checkbox-container input[type="checkbox"]:hover + label::before {
+    background-color: var(--checkbox-hover-color);
+}
+
+.checkbox-container input[type='checkbox']:focus + label::before {
+    box-shadow: var(--focus-shadow-color);
+}
+
+.checkbox-container input[type='checkbox']:disabled + label,
+.checkbox-container input[type='checkbox']:disabled {
+    color: var(--checkbox-disabled-color);
+    cursor: default;
+}
+
+.checkbox-container input[type="checkbox"]:checked + label::before {
+    content: '\002714';
+    background-color: var(--checkbox-checked-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--checkbox-mark-color);
+}
+
+.checkbox-container input[type="checkbox"]:disabled + label::before {
+    background-color: var(--checkbox-disabled-background-color);
+    border-color: var(--checkbox-disabled-border-color);
+}
+/* END FORM STYLES */
+
+/* TABLE STYLES */
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.table td, .table th {
+    border: 1px solid var(--border-color);
+    padding: 8px;
+    font-weight: 300;
+}
+
+.table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.table tr:hover {
+    background-color: var(--border-color);
+}
+
+.table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: var(--primary-color);
+    color: #fff;
+    font-weight: 500;
+}
+/* END TABLE STYLES */
 
 .container {
-    margin: auto;
+    margin: 4rem auto;
     width: 50%;
+    min-width: -moz-fit-content;
     min-width: fit-content;
     border: 3px solid black;
     padding: 20px 10px;
-    background-color: white;
+    background-color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -75,34 +221,20 @@ button {
 }
 
 .title {
-    font-size: 2.2rem;
+    font-size: 3rem;
+    font-weight: 300;
     margin-bottom: 20px;
 }
 
-#books {
-    border-collapse: collapse;
+#add-book-form {
+    margin-bottom: 20px;
+    border: 2px solid black;
+    padding: 2rem;
+    border-radius: 5px;
+    display: none;
+}
+
+#submit-btn {
+    margin: 2rem 0 0;
     width: 100%;
-    max-width: 1000px;
-}
-
-#books td, #books th {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
-
-#books tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-#books tr:hover {
-    background-color: #ddd;
-}
-
-#books th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: var(--primary-color);
-    color: white;
-    font-weight: 500;
 }
