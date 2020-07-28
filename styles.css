@@ -110,7 +110,8 @@ input:not([type="checkbox"]):focus {
 
 /* checkbox styles */
 .checkbox-container {
-    margin-top: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -205,7 +206,7 @@ input:not([type="checkbox"]):focus {
     min-width: -moz-fit-content;
     min-width: fit-content;
     border: 3px solid black;
-    padding: 20px 10px;
+    padding: 2rem;
     background-color: #fff;
     display: flex;
     flex-direction: column;
@@ -214,7 +215,7 @@ input:not([type="checkbox"]):focus {
 
 .container > header {
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -223,11 +224,14 @@ input:not([type="checkbox"]):focus {
 .title {
     font-size: 3rem;
     font-weight: 300;
-    margin-bottom: 20px;
+}
+
+#btn-add-book {
+    margin-bottom: 2rem;
 }
 
 #form-store-book {
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
     border: 2px solid black;
     padding: 2rem;
     border-radius: 5px;
@@ -236,8 +240,11 @@ input:not([type="checkbox"]):focus {
     transition: 3s;
 }
 
+#form-store-book > input {
+    margin-bottom: 1rem;
+}
+
 .btn-submit {
-    margin: 2rem 0 0;
     width: 100%;
 }
 
