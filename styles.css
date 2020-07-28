@@ -226,15 +226,39 @@ input:not([type="checkbox"]):focus {
     margin-bottom: 20px;
 }
 
-#add-book-form {
+#form-store-book {
     margin-bottom: 20px;
     border: 2px solid black;
     padding: 2rem;
     border-radius: 5px;
     display: none;
+    position: relative;
+    transition: 3s;
 }
 
-#submit-btn {
+.btn-submit {
     margin: 2rem 0 0;
     width: 100%;
+}
+
+.btn-close {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    margin: 0;
+
+    color: black;
+    background-color: transparent;
+    border-radius: 2px;
+
+    font-size: 3rem;
+    line-height: 0.5;
+    padding: 0.05em;
+}
+
+.btn-close:hover,
+.btn-close:focus {
+    color: #fff;
+    border-color: transparent;
+    background-color: #B04545;
 }

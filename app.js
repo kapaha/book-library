@@ -12,9 +12,9 @@ function UI() {
 
 // UI prototype functions
 UI.prototype.toggleForm = function() {
-    const formAddBook = document.getElementById('add-book-form');
+    const formAddBook = document.getElementById('form-store-book');
     const displayStyle = getComputedStyle(formAddBook).display;
-    const buttonAddBook = document.getElementById('add-book-btn');
+    const buttonAddBook = document.getElementById('btn-add-book');
     if (displayStyle === 'none') {
         formAddBook.style.display = 'block';
         buttonAddBook.style.display = 'none';
@@ -60,7 +60,7 @@ UI.prototype.addBookToLibary = function () {
     const author = document.getElementById('book-author').value;
     const numberOfPages = document.getElementById('book-pages').value;
 
-    let finished = document.getElementById('checkbox-1').checked;
+    let finished = document.getElementById('book-finished').checked;
     if (finished) {
         finished = 'Yes';
     } else {
@@ -72,7 +72,7 @@ UI.prototype.addBookToLibary = function () {
 }
 
 UI.prototype.formReset = function () {
-    const formAddBook = document.getElementById('add-book-form');
+    const formAddBook = document.getElementById('form-store-book');
     formAddBook.reset();
 }
 
@@ -87,14 +87,19 @@ const book3 = new Book('City of Bones', 'Cassandra Clare', '600', 'Yes');
 myLibary.push(book1, book2, book3);
 ui.render();
 
-document.getElementById('add-book-btn').addEventListener('click', (e) => {
+document.getElementById('btn-add-book').addEventListener('click', () => {
     ui.toggleForm();
 });
 
-document.getElementById('add-book-form').addEventListener('submit', (e) => {
+document.getElementById('form-store-book').addEventListener('submit', (e) => {
     e.preventDefault();
     ui.addBookToLibary();
     ui.render();
     ui.toggleForm();
     ui.formReset();
 });
+
+document.getElementById('form-btn-close').addEventListener('click', () => {
+    ui.toggleForm();
+    ui.formReset();
+})

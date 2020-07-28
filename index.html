@@ -11,9 +11,9 @@
         <main class="container">
             <header>
                 <h1 class="title">My Library</h1>
-                <button id="add-book-btn" class="btn">Add Book</button>
+                <button class="btn" id="btn-add-book">Add Book</button>
             </header>
-            <form id='add-book-form'>
+            <form id='form-store-book'>
                 <label for="book-title">Book Title</label>
                 <input type="text" id="book-title">
 
@@ -24,11 +24,12 @@
                 <input type="number" id="book-pages" min="1">
 
                 <div class="checkbox-container">
-                    <input type="checkbox" id="checkbox-1">
-                    <label for="checkbox-1" class="checkbox-label">Finished</label>
+                    <input type="checkbox" id="book-finished">
+                    <label for="book-finished" class="checkbox-label">Finished</label>
                 </div>
 
-                <button type="submit" class="btn" id="submit-btn" >Store Book</button>
+                <button type="submit" class="btn btn-submit">Store Book</button>
+                <button type="button" class="btn btn-close" id="form-btn-close">&times;</button>
             </form>
             <table class="table" id="book-table">
                 <tr>
