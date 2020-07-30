@@ -1,18 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap");
 
 :root {
-    --primary-color: #4592B0;
+    --primary-color: #4592b0;
+    --danger-color: #b04545;
 
-    --background-color: #E9EFF3;
-    --border-color: #C3C4C7;
+    --background-color: #e9eff3;
+    --border-color: #c3c4c7;
 
-    --focus-border-color: #2271B1;
+    --focus-border-color: #2271b1;
     --focus-shadow-color: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 
-    --input-border-hover-color: #A7AAAD;
+    --input-border-hover-color: #a7aaad;
 
-    --checkbox-hover-color: #35E07D;
-    --checkbox-checked-color: #27AE60;
+    --checkbox-hover-color: #35e07d;
+    --checkbox-checked-color: #27ae60;
     --checkbox-mark-color: #fff;
     --checkbox-disabled-color: #aaa;
     --checkbox-disabled-background-color: #ccc;
@@ -25,7 +26,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
 }
 
 body {
@@ -52,9 +53,8 @@ button {
     color: #fff;
     background-color: var(--primary-color);
     cursor: pointer;
-    transition: color 0.3s ease-in-out,
-                border-color 0.3s ease-in-out,
-                background-color 0.3s ease-in-out;
+    transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out,
+        background-color 0.3s ease-in-out;
 }
 
 .btn:active {
@@ -77,8 +77,7 @@ button {
     border-color: currentColor;
     background-color: #fff;
 }
-/* END BUTTON STYLES */ 
-
+/* END BUTTON STYLES */
 
 /* FORM STYLES */
 label:not(.checkbox-label) {
@@ -94,8 +93,7 @@ input:not([type="checkbox"]) {
     padding: 0.5rem;
     font-size: 18px;
     border-radius: 5px;
-    transition: border-color 0.15s ease-in-out,
-                box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 input:not([type="checkbox"]):hover {
@@ -118,6 +116,7 @@ input:not([type="checkbox"]):focus {
 }
 
 .checkbox-container label {
+    font-weight: 300;
     line-height: 100%;
     cursor: pointer;
     display: flex;
@@ -144,18 +143,18 @@ input:not([type="checkbox"]):focus {
     background-color: var(--checkbox-hover-color);
 }
 
-.checkbox-container input[type='checkbox']:focus + label::before {
+.checkbox-container input[type="checkbox"]:focus + label::before {
     box-shadow: var(--focus-shadow-color);
 }
 
-.checkbox-container input[type='checkbox']:disabled + label,
-.checkbox-container input[type='checkbox']:disabled {
+.checkbox-container input[type="checkbox"]:disabled + label,
+.checkbox-container input[type="checkbox"]:disabled {
     color: var(--checkbox-disabled-color);
     cursor: default;
 }
 
 .checkbox-container input[type="checkbox"]:checked + label::before {
-    content: '\002714';
+    content: "\002714";
     background-color: var(--checkbox-checked-color);
     display: flex;
     justify-content: center;
@@ -176,7 +175,8 @@ input:not([type="checkbox"]):focus {
     max-width: 1000px;
 }
 
-.table td, .table th {
+.table td,
+.table th {
     border: 1px solid var(--border-color);
     padding: 8px;
     font-weight: 300;
@@ -267,5 +267,23 @@ input:not([type="checkbox"]):focus {
 .btn-close:focus {
     color: #fff;
     border-color: transparent;
-    background-color: #B04545;
+    background-color: var(--danger-color);
 }
+
+.error {
+    display: block;
+    width: 100%;
+    font-size: 80%;
+    color: white;
+    background-color: var(--danger-color);
+    border-radius: 0 0 5px 5px;
+}
+
+.error.active {
+    padding: 0.4em;
+}
+
+.error.active:last-of-type {
+    margin-bottom: 2rem;
+}
+
