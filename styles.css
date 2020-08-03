@@ -26,11 +26,11 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: "Montserrat", sans-serif;
 }
 
 body {
     background-color: var(--background-color);
+    font-family: "Montserrat", sans-serif;
 }
 
 /* BUTTON STYLES */
@@ -178,7 +178,7 @@ input:not([type="checkbox"]):focus {
 .table td,
 .table th {
     border: 1px solid var(--border-color);
-    padding: 8px;
+    padding: 0.5rem;
     font-weight: 300;
 }
 
@@ -244,30 +244,39 @@ input:not([type="checkbox"]):focus {
     margin-bottom: 1rem;
 }
 
+#form-btn-close {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+}
+
 .btn-submit {
     width: 100%;
 }
 
-.btn-close {
-    position: absolute;
-    top: 3px;
-    right: 3px;
+.btn-danger {
     margin: 0;
-
     color: black;
-    background-color: transparent;
-    border-radius: 2px;
-
-    font-size: 3rem;
-    line-height: 0.5;
     padding: 0.05em;
+    line-height: 0.5;
+    border-radius: 2px;
+    background-color: transparent;
 }
 
-.btn-close:hover,
-.btn-close:focus {
+.btn-danger:hover,
+.btn-danger:focus {
     color: #fff;
     border-color: transparent;
     background-color: var(--danger-color);
+}
+
+.btn-danger-close {
+    font-size: 3rem;
+}
+
+.btn-danger-remove {
+    font-size: 1.3rem;
+    padding: 0.2em;
 }
 
 .error {
@@ -287,3 +296,6 @@ input:not([type="checkbox"]):focus {
     margin-bottom: 2rem;
 }
 
+.text-align-center {
+    text-align: center;
+}

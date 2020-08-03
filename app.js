@@ -1,13 +1,15 @@
 // Book constructor
-function Book(title, author, pages, finished) {
+function Book(title, author, pages, finished, uniqueId) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.finished = finished;
+    this.uniqueId = uniqueId;
 }
 
 // UI constructor
 function UI() {
+    this.nextBookUniqueId = 1;
     this.btnAddBook = document.getElementById('btn-add-book');
     this.formStoreBook = document.getElementById('form-store-book');
     this.inputBookTitle = document.getElementById('book-title');
@@ -75,12 +77,27 @@ UI.prototype.errorReset = function () {
 
 UI.prototype.addBookToTable = function (book) {
     const newTableRow = document.createElement('tr');
+
+    newTableRow.dataset.bookUniqueId = book.uniqueId;
+    this.nextBookUniqueId += 1;
+
     newTableRow.innerHTML = ` 
         <td>${book.title}</td>
         <td>${book.author}</td>
         <td>${book.pages}</td>
         <td>${book.finished}</td>
+        <td class="text-align-center">
+            <button class="btn btn-danger btn-danger-remove">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        </td>
         `;
+
+    const btnRemove = newTableRow.querySelector('button');
+    btnRemove.addEventListener('click', () => {
+        this.removeBook(newTableRow);
+    });
+
     this.tableBodyBooks.appendChild(newTableRow);
 };
 
@@ -105,6 +122,17 @@ UI.prototype.validateSubmit = function () {
     });
     return this.dataValid;
 };
+
+UI.prototype.removeBook = function(tableRow) {
+    const bookIndex = myLibary.findIndex(book => {
+        if (book.uniqueId === Number(tableRow.dataset.bookUniqueId)) {
+            return true;
+        }
+    });
+
+    myLibary.splice(bookIndex, 1);
+    tableRow.remove();
+}
 
 const ui = new UI();
 
@@ -148,10 +176,11 @@ ui.formStoreBook.addEventListener('submit', (e) => {
             ui.inputBookTitle.value,
             ui.inputBookAuthor.value,
             ui.inputBookPages.value,
-            finished
+            finished,
+            ui.nextBookUniqueId
         );
 
-        // add book to library array, Todo: change this to persistant storage
+        // add book to library, Todo: change this to persistant storage
         myLibary.push(book);
 
         // add book to UI
@@ -168,21 +197,28 @@ const book1 = new Book(
     'Harry Potter and the Sorcerer\'s Stone',
     'J.K. Rowling',
     '800',
-    'Yes'
+    'Yes',
+    ui.nextBookUniqueId
 );
+myLibary.push(book1);
+ui.addBookToTable(book1);
+
 const book2 = new Book(
     'The Lord of the Rings', 
     'J.R.R. Tolkein', 
     '1000', 
-    'No'
+    'No',
+    ui.nextBookUniqueId
 );
+myLibary.push(book2);
+ui.addBookToTable(book2);
+
 const book3 = new Book(
     'City of Bones', 
     'Cassandra Clare', 
     '600', 
-    'Yes'
+    'Yes',
+    ui.nextBookUniqueId
 );
-ui.addBookToTable(book1);
-ui.addBookToTable(book2);
+myLibary.push(book3);
 ui.addBookToTable(book3);
-
