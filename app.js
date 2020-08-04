@@ -10,6 +10,7 @@ function Book(title, author, pages, read, uniqueId) {
 // UI constructor
 function UI() {
     this.nextBookUniqueId = 1;
+    this.mainContainer = document.getElementById('main-container');
     this.btnAddBook = document.getElementById('btn-add-book');
     this.formStoreBook = document.getElementById('form-store-book');
     this.inputBookTitle = document.getElementById('book-title');
@@ -26,7 +27,8 @@ function UI() {
     );
     this.inputBookRead = document.getElementById('book-read');
     this.btnCloseForm = document.getElementById('btn-close-form');
-    this.tableBodyBooks = document.querySelector('#table-books tbody');
+    this.tableOfBooks = document.getElementById('table-books');
+    this.tableOfBooksBody = this.tableOfBooks.querySelector('tbody');
     this.inputFieldsToValidate = [
         {
             name: 'title',
@@ -115,7 +117,7 @@ UI.prototype.addBookToTable = function(book) {
         this.removeBook(newTableRow);
     });
 
-    this.tableBodyBooks.appendChild(newTableRow);
+    this.tableOfBooksBody.appendChild(newTableRow);
 };
 
 UI.prototype.showError = function(object) {
@@ -134,10 +136,12 @@ UI.prototype.toggleRead = function(button, bookIndex) {
         button.classList.remove('btn-toggle-read');
         button.classList.add('btn-toggle-not-read');
         myLibary[bookIndex].read = false;
+        this.showBanner('Book Set To Unread', 'success');
     } else {
         button.classList.remove('btn-toggle-not-read');
         button.classList.add('btn-toggle-read');
         myLibary[bookIndex].read = true;
+        this.showBanner('Book Set To Read', 'success');
     }
 }
 
@@ -161,6 +165,16 @@ UI.prototype.removeBook = function(tableRow) {
     const bookIndex = this.findBookIndexFromRow(tableRow);
     myLibary.splice(bookIndex, 1);
     tableRow.remove();
+    this.showBanner('Book Removed', 'danger');
+}
+
+UI.prototype.showBanner = function(message, className) {
+    const banner = document.createElement('div');
+    banner.className = `event-banner event-banner-${className}`;
+    banner.textContent = message;
+    this.mainContainer.insertBefore(banner, this.tableOfBooks);
+    setTimeout(() => banner.classList.add('event-banner-animate'), 3000);
+    banner.addEventListener('animationend', () => banner.remove());
 }
 
 const ui = new UI();
@@ -211,8 +225,20 @@ ui.formStoreBook.addEventListener('submit', (e) => {
         // hide and reset form
         ui.toggleForm();
         ui.formReset();
+
+        // show success banner
+        ui.showBanner('Book Added', 'success');
     }
 });
+
+// Easter Egg
+// ----------------------------------------------------
+document.addEventListener('keypress', (event) => {
+    if (event.charCode === 66) {
+        ui.showBanner('I Love You <3', 'danger');
+    }
+})
+// ----------------------------------------------------
 
 // manually added books to myLibary for testing
 const book1 = new Book(
@@ -244,3 +270,13 @@ const book3 = new Book(
 );
 myLibary.push(book3);
 ui.addBookToTable(book3);
+
+const book4 = new Book(
+    'Squicket - a true love story',
+    'Bruno Squhal',
+    '1612',
+    false,
+    ui.nextBookUniqueId
+);
+myLibary.push(book4);
+ui.addBookToTable(book4);
