@@ -43,6 +43,7 @@ button {
     background-color: transparent;
     cursor: pointer;
 }
+/* end button resets */
 
 .btn {
     display: inline-block;
@@ -244,10 +245,11 @@ input:not([type="checkbox"]):focus {
     margin-bottom: 1rem;
 }
 
-#form-btn-close {
+#btn-close-form {
     position: absolute;
     top: 3px;
     right: 3px;
+    font-size: 3rem;
 }
 
 .btn-submit {
@@ -255,35 +257,58 @@ input:not([type="checkbox"]):focus {
 }
 
 .btn-danger {
-    margin: 0;
     color: black;
+}
+
+.btn-danger:hover {
+    color: #fff;
+    background-color: var(--danger-color);
+}
+
+.btn-toggle-read {
+    color: var(--checkbox-checked-color);
+}
+
+.btn-toggle-read:hover {
+    background-color: transparent;
+    /* color: #fff; */
+    /* background-color: var(--danger-color); */
+}
+
+.btn-toggle-not-read {
+    background-color: transparent;
+    color: var(--danger-color);
+}
+
+.btn-toggle-not-read:hover {
+    background-color: transparent;
+    /* color: #fff; */
+    /* background-color: var(--checkbox-checked-color); */
+}
+
+.btn-table {
+    font-size: 1.3rem;
+    padding: 0.2em;
+}
+
+.btn-square {
+    margin: 0;
     padding: 0.05em;
     line-height: 0.5;
     border-radius: 2px;
     background-color: transparent;
 }
 
-.btn-danger:hover,
-.btn-danger:focus {
-    color: #fff;
+.btn-square:hover,
+.btn-square:focus {
     border-color: transparent;
-    background-color: var(--danger-color);
-}
-
-.btn-danger-close {
-    font-size: 3rem;
-}
-
-.btn-danger-remove {
-    font-size: 1.3rem;
-    padding: 0.2em;
 }
 
 .error {
     display: block;
     width: 100%;
     font-size: 80%;
-    color: white;
+    color: #fff;
     background-color: var(--danger-color);
     border-radius: 0 0 5px 5px;
 }
