@@ -9,7 +9,6 @@ function Book(title, author, pages, read, uniqueId) {
 
 // UI constructor
 function UI() {
-    this.nextBookUniqueId = 1;
     this.mainContainer = document.getElementById('main-container');
     this.btnAddBook = document.getElementById('btn-add-book');
     this.formStoreBook = document.getElementById('form-store-book');
@@ -81,7 +80,6 @@ UI.prototype.addBookToTable = function(book) {
     const newTableRow = document.createElement('tr');
 
     newTableRow.dataset.bookUniqueId = book.uniqueId;
-    this.nextBookUniqueId += 1;
 
     newTableRow.innerHTML = ` 
         <td>${book.title}</td>
@@ -109,12 +107,16 @@ UI.prototype.addBookToTable = function(book) {
         btnToggleRead.classList.add('btn-toggle-not-read');
     }
 
+    const bookUniqueId = Number(newTableRow.dataset.bookUniqueId);
+
     btnToggleRead.addEventListener('click', () => {
-        this.toggleRead(btnToggleRead, this.findBookIndexFromRow(newTableRow));
+        this.toggleRead(btnToggleRead, storage.findBookIndex(bookUniqueId));
     });
 
     btnRemove.addEventListener('click', () => {
         this.removeBook(newTableRow);
+        storage.removeBook(storage.findBookIndex(bookUniqueId));
+        this.showBanner('Book Removed', 'danger');
     });
 
     this.tableOfBooksBody.appendChild(newTableRow);
@@ -135,19 +137,14 @@ UI.prototype.toggleRead = function(button, bookIndex) {
     if (button.classList.contains('btn-toggle-read')) {
         button.classList.remove('btn-toggle-read');
         button.classList.add('btn-toggle-not-read');
-        myLibary[bookIndex].read = false;
+        storage.bookLibrary[bookIndex].read = false;
         this.showBanner('Book Set To Unread', 'success');
     } else {
         button.classList.remove('btn-toggle-not-read');
         button.classList.add('btn-toggle-read');
-        myLibary[bookIndex].read = true;
+        storage.bookLibrary[bookIndex].read = true;
         this.showBanner('Book Set To Read', 'success');
     }
-}
-
-UI.prototype.findBookIndexFromRow = function(tableRow) {
-    return myLibary.findIndex(book => 
-        book.uniqueId === Number(tableRow.dataset.bookUniqueId));
 }
 
 UI.prototype.validateSubmit = function() {
@@ -162,10 +159,7 @@ UI.prototype.validateSubmit = function() {
 };
 
 UI.prototype.removeBook = function(tableRow) {
-    const bookIndex = this.findBookIndexFromRow(tableRow);
-    myLibary.splice(bookIndex, 1);
     tableRow.remove();
-    this.showBanner('Book Removed', 'danger');
 }
 
 UI.prototype.showBanner = function(message, className) {
@@ -177,9 +171,28 @@ UI.prototype.showBanner = function(message, className) {
     banner.addEventListener('animationend', () => banner.remove());
 }
 
+function Storage() {
+    this.bookLibrary = [];
+    this.nextBookUniqueId = 1;
+}
+
+Storage.prototype.findBookIndex = function(bookUniqueId) {
+    return storage.bookLibrary.findIndex(book => book.uniqueId === bookUniqueId);
+}
+
+Storage.prototype.removeBook = function(bookIndex) {
+    storage.bookLibrary.splice(bookIndex, 1);
+}
+
+Storage.prototype.getNextBookUniqueId = function() {
+    const bookUniqueId = this.nextBookUniqueId;
+    this.nextBookUniqueId += 1;
+    return bookUniqueId;
+}
+
 const ui = new UI();
 
-let myLibary = [];
+const storage = new Storage();
 
 ui.btnAddBook.addEventListener('click', () => ui.toggleForm());
 
@@ -213,11 +226,11 @@ ui.formStoreBook.addEventListener('submit', (e) => {
             ui.inputBookAuthor.value,
             ui.inputBookPages.value,
             ui.inputBookRead.checked,
-            ui.nextBookUniqueId
+            storage.getNextBookUniqueId()
         );
 
         // add book to library, Todo: change this to persistant storage
-        myLibary.push(book);
+        storage.bookLibrary.push(book);
 
         // add book to UI
         ui.addBookToTable(book);
@@ -240,15 +253,15 @@ document.addEventListener('keypress', (event) => {
 })
 // ----------------------------------------------------
 
-// manually added books to myLibary for testing
+// manually added books to storage.bookLibrary for testing
 const book1 = new Book(
     'Harry Potter and the Sorcerer\'s Stone',
     'J.K. Rowling',
     '800',
     true,
-    ui.nextBookUniqueId
+    storage.getNextBookUniqueId()
 );
-myLibary.push(book1);
+storage.bookLibrary.push(book1);
 ui.addBookToTable(book1);
 
 const book2 = new Book(
@@ -256,9 +269,9 @@ const book2 = new Book(
     'J.R.R. Tolkein', 
     '1000', 
     false,
-    ui.nextBookUniqueId
+    storage.getNextBookUniqueId()
 );
-myLibary.push(book2);
+storage.bookLibrary.push(book2);
 ui.addBookToTable(book2);
 
 const book3 = new Book(
@@ -266,9 +279,9 @@ const book3 = new Book(
     'Cassandra Clare', 
     '600', 
     true,
-    ui.nextBookUniqueId
+    storage.getNextBookUniqueId()
 );
-myLibary.push(book3);
+storage.bookLibrary.push(book3);
 ui.addBookToTable(book3);
 
 const book4 = new Book(
@@ -276,7 +289,7 @@ const book4 = new Book(
     'Bruno Squhal',
     '1612',
     false,
-    ui.nextBookUniqueId
+    storage.getNextBookUniqueId()
 );
-myLibary.push(book4);
+storage.bookLibrary.push(book4);
 ui.addBookToTable(book4);
