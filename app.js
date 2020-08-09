@@ -107,10 +107,11 @@ UI.prototype.addBookToTable = function(book) {
         btnToggleRead.classList.add('btn-toggle-not-read');
     }
 
-    const bookUniqueId = Number(newTableRow.dataset.bookUniqueId);
+    const bookUniqueId = newTableRow.dataset.bookUniqueId;
 
     btnToggleRead.addEventListener('click', () => {
         this.toggleRead(btnToggleRead, storage.findBookIndex(bookUniqueId));
+        storage.toggleRead(storage.findBookIndex(bookUniqueId));
     });
 
     btnRemove.addEventListener('click', () => {
@@ -133,16 +134,14 @@ UI.prototype.showError = function(object) {
     object.errorElement.className = 'error active';
 };
 
-UI.prototype.toggleRead = function(button, bookIndex) {
+UI.prototype.toggleRead = function(button) {
     if (button.classList.contains('btn-toggle-read')) {
         button.classList.remove('btn-toggle-read');
         button.classList.add('btn-toggle-not-read');
-        storage.bookLibrary[bookIndex].read = false;
-        this.showBanner('Book Set To Unread', 'success');
+        this.showBanner('Book Set To Unread', 'danger');
     } else {
         button.classList.remove('btn-toggle-not-read');
         button.classList.add('btn-toggle-read');
-        storage.bookLibrary[bookIndex].read = true;
         this.showBanner('Book Set To Read', 'success');
     }
 }
@@ -171,28 +170,116 @@ UI.prototype.showBanner = function(message, className) {
     banner.addEventListener('animationend', () => banner.remove());
 }
 
+UI.prototype.displayBooks = function(books) {
+    books.forEach(book => this.addBookToTable(book));
+} 
+
+UI.prototype.createExampleBooks = function() {
+    const book1 = new Book(
+        'Harry Potter and the Sorcerer\'s Stone',
+        'J.K. Rowling',
+        '800',
+        true,
+        storage.getNextBookUniqueId()
+    );
+
+    const book2 = new Book(
+        'The Lord of the Rings', 
+        'J.R.R. Tolkein', 
+        '1000', 
+        false,
+        storage.getNextBookUniqueId()
+    );
+
+    const book3 = new Book(
+        'City of Bones', 
+        'Cassandra Clare', 
+        '600', 
+        true,
+        storage.getNextBookUniqueId()
+    );
+
+    const book4 = new Book(
+        'Squicket - a true love story',
+        'Bruno Squhal',
+        '1612',
+        false,
+        storage.getNextBookUniqueId()
+    );
+
+    return [book1, book2, book3, book4];
+}
+
 function Storage() {
-    this.bookLibrary = [];
-    this.nextBookUniqueId = 1;
+}
+
+Storage.prototype.getBooks = function() {
+    let books;
+    if (localStorage.getItem('bookLibrary') === null) {
+        books = ui.createExampleBooks();
+        localStorage.setItem('bookLibrary', JSON.stringify(books));
+    } else {
+        books = JSON.parse(localStorage.getItem('bookLibrary'));
+    }
+    return books;
+}
+
+Storage.prototype.addBook = function(book) {
+    const books = this.getBooks();
+    books.push(book);
+    localStorage.setItem('bookLibrary', JSON.stringify(books));
+}
+
+Storage.prototype.removeBook = function(index) {
+    const books = this.getBooks();
+    books.splice(index, 1);
+    localStorage.setItem('bookLibrary', JSON.stringify(books));
+
+    // reset nextBookUniqueId if library is empty
+    if (books.length === 0) {
+        localStorage.setItem('nextBookUniqueId', '1');
+    }
+}
+
+Storage.prototype.toggleRead = function(index) {
+    const books = this.getBooks();
+    books[index].read = !books[index].read;
+    localStorage.setItem('bookLibrary', JSON.stringify(books));
 }
 
 Storage.prototype.findBookIndex = function(bookUniqueId) {
-    return storage.bookLibrary.findIndex(book => book.uniqueId === bookUniqueId);
-}
-
-Storage.prototype.removeBook = function(bookIndex) {
-    storage.bookLibrary.splice(bookIndex, 1);
+    const books = this.getBooks();
+    return books.findIndex(book => book.uniqueId === bookUniqueId);
 }
 
 Storage.prototype.getNextBookUniqueId = function() {
-    const bookUniqueId = this.nextBookUniqueId;
-    this.nextBookUniqueId += 1;
-    return bookUniqueId;
+    let currentBookUniqueId;
+
+    if (localStorage.getItem('nextBookUniqueId') === null) {
+        currentBookUniqueId = '1';
+    } else {
+        currentBookUniqueId = localStorage.getItem('nextBookUniqueId');
+    }
+
+    // store incremented bookUniqueId
+    const nextBookUniqueId = Number(currentBookUniqueId) + 1;
+    localStorage.setItem('nextBookUniqueId', nextBookUniqueId);
+
+    return currentBookUniqueId;
+}
+
+Storage.prototype.printLocalStorage = function() {
+    const bookLibraryInStorage = JSON.parse(localStorage.getItem('bookLibrary'));
+    const nextBookUniqueId = localStorage.getItem('nextBookUniqueId');
+    console.table(bookLibraryInStorage);
+    console.log('nextBookUniqueId:', nextBookUniqueId);
 }
 
 const ui = new UI();
-
 const storage = new Storage();
+
+// when page loads
+document.addEventListener('DOMContentLoaded', () => ui.displayBooks(storage.getBooks()));
 
 ui.btnAddBook.addEventListener('click', () => ui.toggleForm());
 
@@ -229,11 +316,11 @@ ui.formStoreBook.addEventListener('submit', (e) => {
             storage.getNextBookUniqueId()
         );
 
-        // add book to library, Todo: change this to persistant storage
-        storage.bookLibrary.push(book);
-
         // add book to UI
         ui.addBookToTable(book);
+
+        // add book to localStorage
+        storage.addBook(book);
 
         // hide and reset form
         ui.toggleForm();
@@ -246,50 +333,11 @@ ui.formStoreBook.addEventListener('submit', (e) => {
 
 // Easter Egg
 // ----------------------------------------------------
+// show banner if 'B' is pressed
 document.addEventListener('keypress', (event) => {
     if (event.charCode === 66) {
-        ui.showBanner('I Love You <3', 'danger');
+        ui.showBanner('I Love You', 'danger');
     }
 })
 // ----------------------------------------------------
 
-// manually added books to storage.bookLibrary for testing
-const book1 = new Book(
-    'Harry Potter and the Sorcerer\'s Stone',
-    'J.K. Rowling',
-    '800',
-    true,
-    storage.getNextBookUniqueId()
-);
-storage.bookLibrary.push(book1);
-ui.addBookToTable(book1);
-
-const book2 = new Book(
-    'The Lord of the Rings', 
-    'J.R.R. Tolkein', 
-    '1000', 
-    false,
-    storage.getNextBookUniqueId()
-);
-storage.bookLibrary.push(book2);
-ui.addBookToTable(book2);
-
-const book3 = new Book(
-    'City of Bones', 
-    'Cassandra Clare', 
-    '600', 
-    true,
-    storage.getNextBookUniqueId()
-);
-storage.bookLibrary.push(book3);
-ui.addBookToTable(book3);
-
-const book4 = new Book(
-    'Squicket - a true love story',
-    'Bruno Squhal',
-    '1612',
-    false,
-    storage.getNextBookUniqueId()
-);
-storage.bookLibrary.push(book4);
-ui.addBookToTable(book4);
