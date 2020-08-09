@@ -144,7 +144,7 @@ UI.prototype.toggleRead = function(button) {
         button.classList.add('btn-toggle-read');
         this.showBanner('Book Set To Read', 'success');
     }
-}
+};
 
 UI.prototype.validateSubmit = function() {
     this.dataValid = true;
@@ -159,7 +159,7 @@ UI.prototype.validateSubmit = function() {
 
 UI.prototype.removeBook = function(tableRow) {
     tableRow.remove();
-}
+};
 
 UI.prototype.showBanner = function(message, className) {
     const banner = document.createElement('div');
@@ -168,11 +168,11 @@ UI.prototype.showBanner = function(message, className) {
     this.mainContainer.insertBefore(banner, this.tableOfBooks);
     setTimeout(() => banner.classList.add('event-banner-animate'), 3000);
     banner.addEventListener('animationend', () => banner.remove());
-}
+};
 
 UI.prototype.displayBooks = function(books) {
     books.forEach(book => this.addBookToTable(book));
-} 
+};
 
 UI.prototype.createExampleBooks = function() {
     const book1 = new Book(
@@ -208,7 +208,7 @@ UI.prototype.createExampleBooks = function() {
     );
 
     return [book1, book2, book3, book4];
-}
+};
 
 function Storage() {
 }
@@ -222,13 +222,13 @@ Storage.prototype.getBooks = function() {
         books = JSON.parse(localStorage.getItem('bookLibrary'));
     }
     return books;
-}
+};
 
 Storage.prototype.addBook = function(book) {
     const books = this.getBooks();
     books.push(book);
     localStorage.setItem('bookLibrary', JSON.stringify(books));
-}
+};
 
 Storage.prototype.removeBook = function(index) {
     const books = this.getBooks();
@@ -239,18 +239,18 @@ Storage.prototype.removeBook = function(index) {
     if (books.length === 0) {
         localStorage.setItem('nextBookUniqueId', '1');
     }
-}
+};
 
 Storage.prototype.toggleRead = function(index) {
     const books = this.getBooks();
     books[index].read = !books[index].read;
     localStorage.setItem('bookLibrary', JSON.stringify(books));
-}
+};
 
 Storage.prototype.findBookIndex = function(bookUniqueId) {
     const books = this.getBooks();
     return books.findIndex(book => book.uniqueId === bookUniqueId);
-}
+};
 
 Storage.prototype.getNextBookUniqueId = function() {
     let currentBookUniqueId;
@@ -266,14 +266,14 @@ Storage.prototype.getNextBookUniqueId = function() {
     localStorage.setItem('nextBookUniqueId', nextBookUniqueId);
 
     return currentBookUniqueId;
-}
+};
 
 Storage.prototype.printLocalStorage = function() {
     const bookLibraryInStorage = JSON.parse(localStorage.getItem('bookLibrary'));
     const nextBookUniqueId = localStorage.getItem('nextBookUniqueId');
     console.table(bookLibraryInStorage);
     console.log('nextBookUniqueId:', nextBookUniqueId);
-}
+};
 
 const ui = new UI();
 const storage = new Storage();
@@ -338,6 +338,6 @@ document.addEventListener('keypress', (event) => {
     if (event.charCode === 66) {
         ui.showBanner('I Love You', 'danger');
     }
-})
+});
 // ----------------------------------------------------
 
