@@ -327,7 +327,7 @@ input:not([type="checkbox"]):focus {
     margin-bottom: 2rem;
 }
 
-.text-align-center {
+.table .text-align-center {
     text-align: center;
 }
 
