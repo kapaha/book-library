@@ -3,21 +3,15 @@
 :root {
     --primary-color: #4592b0;
     --danger-color: #b04545;
-
+    --success-color: #27ae60;
+    --success-color-light: #35e07d;
+    --font-color-light: #fff;
     --background-color: #e9eff3;
     --border-color: #c3c4c7;
-
+    --border-color-dark: #a7aaad;
     --focus-border-color: #2271b1;
     --focus-shadow-color: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-
-    --input-border-hover-color: #a7aaad;
-
-    --checkbox-hover-color: #35e07d;
-    --checkbox-checked-color: #27ae60;
-    --checkbox-mark-color: #fff;
-    --checkbox-disabled-color: #aaa;
-    --checkbox-disabled-background-color: #ccc;
-    --checkbox-disabled-border-color: #999;
+    --flow-space: 2rem;
 }
 
 *,
@@ -29,7 +23,8 @@
 }
 
 body {
-    background-color: var(--background-color);
+    min-height: 100vh;
+    background-color: #d8d8d8;
     font-family: "Montserrat", sans-serif;
 }
 
@@ -47,11 +42,10 @@ button {
 
 .btn {
     display: inline-block;
-    margin: 2px 0;
     border: solid 1px transparent;
     border-radius: 4px;
-    padding: 0.5em 1em;
-    color: #fff;
+    padding: 0.6em 1.5em;
+    color: var(--font-color-light);
     background-color: var(--primary-color);
     cursor: pointer;
     transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out,
@@ -63,20 +57,10 @@ button {
     filter: saturate(400%);
 }
 
-.btn:focus {
-    border-color: var(--focus-border-color);
-    outline: none;
-    box-shadow: var(--focus-shadow-color);
-}
-
-.btn::-moz-focus-inner {
-    border: none;
-}
-
 .btn:hover {
     color: var(--primary-color);
     border-color: currentColor;
-    background-color: #fff;
+    background-color: var(--font-color-light);
 }
 /* END BUTTON STYLES */
 
@@ -98,19 +82,12 @@ input:not([type="checkbox"]) {
 }
 
 input:not([type="checkbox"]):hover {
-    border-color: var(--input-border-hover-color);
-}
-
-input:not([type="checkbox"]):focus {
     border-color: var(--focus-border-color);
-    box-shadow: var(--focus-shadow-color);
-    outline: none;
 }
 
 /* checkbox styles */
 .checkbox-container {
     margin-top: 1rem;
-    margin-bottom: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -141,44 +118,45 @@ input:not([type="checkbox"]):focus {
 
 .checkbox-container label:hover::before,
 .checkbox-container input[type="checkbox"]:hover + label::before {
-    background-color: var(--checkbox-hover-color);
+    background-color: var(--success-color-light);
 }
 
 .checkbox-container input[type="checkbox"]:focus + label::before {
     box-shadow: var(--focus-shadow-color);
-}
-
-.checkbox-container input[type="checkbox"]:disabled + label,
-.checkbox-container input[type="checkbox"]:disabled {
-    color: var(--checkbox-disabled-color);
-    cursor: default;
+    outline: none;
+    border-color: var(--focus-border-color);
 }
 
 .checkbox-container input[type="checkbox"]:checked + label::before {
     content: "\002714";
-    background-color: var(--checkbox-checked-color);
+    background-color: var(--success-color);
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--checkbox-mark-color);
-}
-
-.checkbox-container input[type="checkbox"]:disabled + label::before {
-    background-color: var(--checkbox-disabled-background-color);
-    border-color: var(--checkbox-disabled-border-color);
+    color: var(--font-color-light);
 }
 /* END FORM STYLES */
 
 /* TABLE STYLES */
-.table {
-    border-collapse: collapse;
+
+.table-group {
+    --flow-space: 0;
+    overflow-x: auto;
     width: 100%;
-    max-width: 1000px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table {
+    --flow-space: 0;
+    border-collapse: collapse;
+
+    width: 100%;
+    min-width: 40rem;
 }
 
 .table td,
 .table th {
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border-color-dark);
     padding: 0.5rem;
 }
 
@@ -199,46 +177,61 @@ input:not([type="checkbox"]):focus {
     padding-bottom: 12px;
     text-align: left;
     background-color: var(--primary-color);
-    color: #fff;
+    color: var(--font-color-light);
     font-weight: 500;
 }
 /* END TABLE STYLES */
 
 .container {
-    margin: 4rem auto;
-    width: 50%;
-    min-width: -moz-fit-content;
-    min-width: fit-content;
-    border: 3px solid black;
+    max-width: 75rem;
+
+    margin-top: 4rem;
+    margin-left: auto;
+    margin-right: auto;
     padding: 2rem;
+
     background-color: #fff;
+
     display: flex;
     flex-direction: column;
     align-items: center;
+
     /* this is to hide banner when fades out */
     overflow: hidden;
 }
 
-.container > header {
+.container *:focus {
+    outline: none;
+    border-color: var(--focus-border-color);
+    box-shadow: var(--focus-shadow-color);
+}
+
+.flow > * + * {
+    margin-top: var(--flow-space, 2rem);
+}
+
+.header {
     width: 100%;
-    margin-bottom: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.title {
-    font-size: 3rem;
+.header > h1 {
+    font-size: 3.2rem;
     font-weight: 300;
 }
 
 #btn-add-book {
-    margin-bottom: 2rem;
+    margin-bottom: var(--flow-space);
 }
 
 #form-store-book {
-    margin-bottom: 2rem;
-    border: 2px solid black;
+    margin-bottom: var(--flow-space);
+}
+
+.form {
+    border: 1px solid var(--border-color-dark);
     padding: 2rem;
     border-radius: 5px;
     display: none;
@@ -246,15 +239,12 @@ input:not([type="checkbox"]):focus {
     transition: 3s;
 }
 
-#form-store-book > input {
-    margin-bottom: 1rem;
+.form > label {
+    --flow-space: 1rem;
 }
 
-#btn-close-form {
-    position: absolute;
-    top: 3px;
-    right: 3px;
-    font-size: 3rem;
+.form > input {
+    --flow-space: 0;
 }
 
 .btn-submit {
@@ -266,18 +256,16 @@ input:not([type="checkbox"]):focus {
 }
 
 .btn-danger:hover {
-    color: #fff;
+    color: var(--font-color-light);
     background-color: var(--danger-color);
 }
 
 .btn-toggle-read {
-    color: var(--checkbox-checked-color);
+    color: var(--success-color);
 }
 
 .btn-toggle-read:hover {
     background-color: transparent;
-    /* color: #fff; */
-    /* background-color: var(--danger-color); */
 }
 
 .btn-toggle-not-read {
@@ -287,8 +275,6 @@ input:not([type="checkbox"]):focus {
 
 .btn-toggle-not-read:hover {
     background-color: transparent;
-    /* color: #fff; */
-    /* background-color: var(--checkbox-checked-color); */
 }
 
 .btn-table {
@@ -298,7 +284,7 @@ input:not([type="checkbox"]):focus {
 
 .btn-square {
     margin: 0;
-    padding: 0.05em;
+    padding: 0.15em;
     line-height: 0.5;
     border-radius: 2px;
     background-color: transparent;
@@ -309,12 +295,23 @@ input:not([type="checkbox"]):focus {
     border-color: transparent;
 }
 
+
+#btn-close-form {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    font-size: 3rem;
+    font-weight: 300;
+    padding: 0.01em;
+}
+
 .error {
+    --flow-space: 1rem;
     display: block;
     width: 100%;
     font-size: 80%;
     font-weight: 500;
-    color: #fff;
+    color: var(--font-color-light);
     background-color: var(--danger-color);
     border-radius: 0 0 5px 5px;
 }
@@ -332,11 +329,12 @@ input:not([type="checkbox"]):focus {
 }
 
 .event-banner {
-    width: 100%;
+    --flow-space: 0;
     max-width: 1000px;
+    width: 100%;
     margin-bottom: 0.5rem;
     padding: 0.4em;
-    color: #fff;
+    color: var(--font-color-light);
     font-size: 1rem;
     font-weight: 500;
     text-transform: capitalize;
@@ -347,7 +345,7 @@ input:not([type="checkbox"]):focus {
     background-color: var(--danger-color);
 }
 .event-banner-success {
-    background-color: var(--checkbox-checked-color);
+    background-color: var(--success-color);
 }
 
 .event-banner-animate {

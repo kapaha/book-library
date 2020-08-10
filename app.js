@@ -26,6 +26,7 @@ function UI() {
     );
     this.inputBookRead = document.getElementById('book-read');
     this.btnCloseForm = document.getElementById('btn-close-form');
+    this.sectionTableGroup = document.querySelector('.table-group');
     this.tableOfBooks = document.getElementById('table-books');
     this.tableOfBooksBody = this.tableOfBooks.querySelector('tbody');
     this.inputFieldsToValidate = [
@@ -165,7 +166,7 @@ UI.prototype.showBanner = function(message, className) {
     const banner = document.createElement('div');
     banner.className = `event-banner event-banner-${className}`;
     banner.textContent = message;
-    this.mainContainer.insertBefore(banner, this.tableOfBooks);
+    this.mainContainer.insertBefore(banner, this.sectionTableGroup);
     setTimeout(() => banner.classList.add('event-banner-animate'), 3000);
     banner.addEventListener('animationend', () => banner.remove());
 };
