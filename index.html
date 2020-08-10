@@ -2,55 +2,58 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Library</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css" />
     <script defer src="app.js"></script>
     <script src="https://kit.fontawesome.com/4323c15833.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <main class="container" id="main-container">
-        <header>
-            <h1 class="title">My Library</h1>
+    <main class="container flow" id="main-container">
+        <header class="header">
+            <h1>My Library</h1>
         </header>
         <button class="btn" id="btn-add-book">Add Book</button>
-        <form id="form-store-book" novalidate>
+        <form class="form flow" id="form-store-book" novalidate>
             <label for="book-title">Book Title</label>
-            <input type="text" id="book-title" autocomplete="off" required>
+            <input type="text" id="book-title" autocomplete="off" required />
             <span class="error" aria-live="polite"></span>
 
             <label for="book-author">Book Author</label>
-            <input type="text" id="book-author" autocomplete="off" required>
+            <input type="text" id="book-author" autocomplete="off" required />
             <span class="error" aria-live="polite"></span>
 
             <label for="book-pages">Pages</label>
-            <input type="number" id="book-pages" min="1" autocomplete="off" required>
+            <input type="number" id="book-pages" min="1" autocomplete="off" required />
             <span class="error" aria-live="polite"></span>
 
             <div class="checkbox-container">
-                <input type="checkbox" id="book-read">
+                <input type="checkbox" id="book-read" />
                 <label for="book-read" class="checkbox-label">Read</label>
             </div>
 
             <button type="submit" class="btn btn-submit">Store Book</button>
             <button type="button" class="btn btn-square btn-danger" id="btn-close-form">&times;</button>
         </form>
-        <table class="table" id="table-books">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Pages</th>
-                    <th class="text-align-center">Read</th>
-                    <th class="text-align-center">Remove</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- new book table rows added here from Javascript -->
-            </tbody>
-        </table>
+        <section class="table-group">
+            <table class="table" id="table-books">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Pages</th>
+                        <th class="text-align-center">Read</th>
+                        <th class="text-align-center">Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- new book table rows added here from Javascript -->
+                </tbody>
+            </table>
+        </section>
     </main>
 </body>
 
