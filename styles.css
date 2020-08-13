@@ -224,10 +224,6 @@ input:not([type="checkbox"]):hover {
     margin-bottom: var(--flow-space);
 }
 
-#form-store-book {
-    margin-bottom: var(--flow-space);
-}
-
 .form {
     border: 1px solid var(--border-color-dark);
     padding: 2rem;
@@ -235,6 +231,8 @@ input:not([type="checkbox"]):hover {
     display: none;
     position: relative;
     transition: 3s;
+    margin-bottom: var(--flow-space);
+    width: 20rem;
 }
 
 .form > label {
