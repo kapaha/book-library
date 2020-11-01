@@ -1,10 +1,12 @@
-// Book constructor
-function Book(title, author, pages, read, uniqueId) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-    this.uniqueId = uniqueId;
+// Book Class
+class Book {
+    constructor(title, author, pages, read, uniqueId) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+        this.uniqueId = uniqueId;
+    }
 }
 
 // UI constructor
