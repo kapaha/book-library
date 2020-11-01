@@ -82,7 +82,7 @@ UI.prototype.addBookToTable = function(book) {
 
     newTableRow.dataset.bookUniqueId = book.uniqueId;
 
-    newTableRow.innerHTML = ` 
+    newTableRow.innerHTML = `
         <td>${book.title}</td>
         <td>${book.author}</td>
         <td>${book.pages}</td>
@@ -185,17 +185,17 @@ UI.prototype.createExampleBooks = function() {
     );
 
     const book2 = new Book(
-        'The Lord of the Rings', 
-        'J.R.R. Tolkein', 
-        '1000', 
+        'The Lord of the Rings',
+        'J.R.R. Tolkein',
+        '1000',
         false,
         storage.getNextBookUniqueId()
     );
 
     const book3 = new Book(
-        'City of Bones', 
-        'Cassandra Clare', 
-        '600', 
+        'City of Bones',
+        'Cassandra Clare',
+        '600',
         true,
         storage.getNextBookUniqueId()
     );
