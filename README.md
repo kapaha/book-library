@@ -7,7 +7,7 @@ Book library app created with HTML, CSS & Javascript for The Odin Project.
 Here is a working live demo: https://kapaha.github.io/book-library/
 
 ## General info
-This project was created as a part of the [Javascript](https://www.theodinproject.com/courses/javascript/lessons/library) course with [The Odin Project](https://theodinproject.com). The aim of this project was to combine the knowledge of HTML, CSS & Javascript I have learnt throughout the course.
+This project was created as a part of the [Javascript](https://www.theodinproject.com/courses/javascript/lessons/library) course with [The Odin Project](https://theodinproject.com). The aim of this project was to solidate the knowledge I have learnt about Objects and Object Constructors. Later on, as part of a lesson on [Classes](https://www.theodinproject.com/courses/javascript/lessons/classes), I refactored the code to use class instead of plain constructors.
 
 ## Features
 * Add books to your library - your books are saved in local storage on your browser
