@@ -283,70 +283,70 @@ class UI {
     };
 }
 
-function Storage() {
-}
+// Storage Class
+class Storage {
+    getBooks() {
+        let books;
+        if (localStorage.getItem('bookLibrary') === null) {
+            books = ui.createExampleBooks();
+            localStorage.setItem('bookLibrary', JSON.stringify(books));
+        } else {
+            books = JSON.parse(localStorage.getItem('bookLibrary'));
+        }
+        return books;
+    };
 
-Storage.prototype.getBooks = function () {
-    let books;
-    if (localStorage.getItem('bookLibrary') === null) {
-        books = ui.createExampleBooks();
+    addBook(book) {
+        const books = this.getBooks();
+        books.push(book);
         localStorage.setItem('bookLibrary', JSON.stringify(books));
-    } else {
-        books = JSON.parse(localStorage.getItem('bookLibrary'));
-    }
-    return books;
-};
+    };
 
-Storage.prototype.addBook = function (book) {
-    const books = this.getBooks();
-    books.push(book);
-    localStorage.setItem('bookLibrary', JSON.stringify(books));
-};
+    removeBook(index) {
+        const books = this.getBooks();
+        books.splice(index, 1);
+        localStorage.setItem('bookLibrary', JSON.stringify(books));
 
-Storage.prototype.removeBook = function (index) {
-    const books = this.getBooks();
-    books.splice(index, 1);
-    localStorage.setItem('bookLibrary', JSON.stringify(books));
+        // reset nextBookUniqueId if library is empty
+        if (books.length === 0) {
+            localStorage.setItem('nextBookUniqueId', '1');
+        }
+    };
 
-    // reset nextBookUniqueId if library is empty
-    if (books.length === 0) {
-        localStorage.setItem('nextBookUniqueId', '1');
-    }
-};
+    toggleRead(index) {
+        const books = this.getBooks();
+        books[index].read = !books[index].read;
+        localStorage.setItem('bookLibrary', JSON.stringify(books));
+    };
 
-Storage.prototype.toggleRead = function (index) {
-    const books = this.getBooks();
-    books[index].read = !books[index].read;
-    localStorage.setItem('bookLibrary', JSON.stringify(books));
-};
+    findBookIndex(bookUniqueId) {
+        const books = this.getBooks();
+        return books.findIndex(book => book.uniqueId === bookUniqueId);
+    };
 
-Storage.prototype.findBookIndex = function (bookUniqueId) {
-    const books = this.getBooks();
-    return books.findIndex(book => book.uniqueId === bookUniqueId);
-};
+    getNextBookUniqueId() {
+        let currentBookUniqueId;
 
-Storage.prototype.getNextBookUniqueId = function () {
-    let currentBookUniqueId;
+        if (localStorage.getItem('nextBookUniqueId') === null) {
+            currentBookUniqueId = '1';
+        } else {
+            currentBookUniqueId = localStorage.getItem('nextBookUniqueId');
+        }
 
-    if (localStorage.getItem('nextBookUniqueId') === null) {
-        currentBookUniqueId = '1';
-    } else {
-        currentBookUniqueId = localStorage.getItem('nextBookUniqueId');
-    }
+        // store incremented bookUniqueId
+        const nextBookUniqueId = Number(currentBookUniqueId) + 1;
+        localStorage.setItem('nextBookUniqueId', nextBookUniqueId);
 
-    // store incremented bookUniqueId
-    const nextBookUniqueId = Number(currentBookUniqueId) + 1;
-    localStorage.setItem('nextBookUniqueId', nextBookUniqueId);
+        return currentBookUniqueId;
+    };
 
-    return currentBookUniqueId;
-};
-
-Storage.prototype.printLocalStorage = function () {
-    const bookLibraryInStorage = JSON.parse(localStorage.getItem('bookLibrary'));
-    const nextBookUniqueId = localStorage.getItem('nextBookUniqueId');
-    console.table(bookLibraryInStorage);
-    console.log('nextBookUniqueId:', nextBookUniqueId);
-};
+    printLocalStorage() {
+        const bookLibraryInStorage = JSON.parse(localStorage.getItem('bookLibrary'));
+        const nextBookUniqueId = localStorage.getItem('nextBookUniqueId');
+        console.table(bookLibraryInStorage);
+        console.log('nextBookUniqueId:', nextBookUniqueId);
+    };
+}
 
 const ui = new UI();
 const storage = new Storage();
